@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>المخطط الصحي والرياضي الذكي</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="color-scheme" content="dark light">
+</head>
+<body>
+<header>
+  <h1>Body Style </h1>
+  <h3>المخطط الصحي والرياضي الذكي</h3>
+  <p>أدخل بياناتك واختر الهدف لتحصل على تمارين وخطة غذائية كاملة ومؤشرات صحية ويومية.</p>
+</header>
+
+
+
+
+<div class="container">
+  <div class="grid">
+    <!-- الإدخالات -->
+    <section class="card span-4">
+      <h2>البيانات الأساسية</h2>
+      <div class="row cols-2">
+        <div>
+          <label>الوزن (كغ)</label>
+          <input id="weight" type="number" min="30" max="250" step="0.1" value="75">
+        </div>
+        <div>
+          <label>الطول (سم)</label>
+          <input id="height" type="number" min="130" max="220" step="1" value="175">
+        </div>
+      </div>
+      <div class="row cols-2">
+        <div>
+          <label>العمر (سنة)</label>
+          <input id="age" type="number" min="12" max="90" step="1" value="25">
+        </div>
+        <div>
+          <label>الجنس</label>
+          <select id="sex">
+            <option value="male">ذكر</option>
+            <option value="female">أنثى</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row cols-2">
+        <div>
+          <label>الهدف</label>
+          <select id="goal">
+            <option value="loss">خسارة دهون</option>
+            <option value="maintain">ثبات الوزن</option>
+            <option value="gain">زيادة عضل</option>
+          </select>
+        </div>
+        <div data-show-when="gain">
+          <label>منطقة التركيز (للزيادة)</label>
+          <select id="focusArea">
+            <option value="chest">صدر</option>
+            <option value="back">ظهر</option>
+            <option value="shoulders">كتف</option>
+            <option value="legs">ساقين</option>
+            <option value="arms">ذراعين</option>
+            <option value="glutes">ألوية</option>
+            <option value="core">كور/بطن</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row cols-2">
+        <div>
+          <label>مستوى النشاط</label>
+          <select id="activity">
+            <option value="sedentary">منخفض</option>
+            <option value="light">خفيف</option>
+            <option value="moderate" selected>متوسط</option>
+            <option value="very">مرتفع</option>
+          </select>
+        </div>
+        <div>
+          <label>التمرين أين؟</label>
+          <select id="environment">
+            <option value="home">المنزل</option>
+            <option value="gym" selected>النادي</option>
+          </select>
+        </div>
+      </div>
+
+      <h2 style="margin-top:14px;">جدول اليوم</h2>
+      <div class="row cols-3">
+        <div>
+          <label>الاستيقاظ</label>
+          <input id="wake" type="time" value="07:00">
+        </div>
+        <div>
+          <label>النوم</label>
+          <input id="sleep" type="time" value="23:00">
+        </div>
+        <div>
+          <label>وقت التمرين</label>
+          <select id="workoutTime">
+            <option value="morning">صباح</option>
+            <option value="noon">ظهر</option>
+            <option value="evening" selected>مساء</option>
+          </select>
+        </div>
+      </div>
+      <div class="row cols-3">
+        <div>
+          <label>مدة التمرين (دقيقة)</label>
+          <input id="workoutMinutes" type="number" min="20" max="120" step="5" value="60">
+        </div>
+        <div>
+          <label>أيام التمرين/الأسبوع</label>
+          <select id="daysPerWeek">
+            <option>3</option><option selected>4</option><option>5</option><option>6</option>
+          </select>
+        </div>
+        <div data-show-when="loss">
+          <label>تفضيل حرق الدهون</label>
+          <select id="fatLossStyle">
+            <option value="mixed" selected>مختلط (قوة + HIIT)</option>
+            <option value="lowImpact">منخفض التأثير</option>
+            <option value="cardio">كارديو أساسي</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary" id="updateBtn">تحديث الخطة</button>
+        <button class="btn-secondary" id="printBtn">طباعة / حفظ PDF</button>
+        <button class="btn-ghost" id="resetBtn">إعادة ضبط</button>
+      </div>
+      <div class="muted" style="margin-top:8px">
+        * يتم حفظ إعداداتك تلقائيًا في المتصفح (localStorage).
+      </div>
+    </section>
+
+    <!-- المؤشرات -->
+    <section class="card span-8">
+      <h2>المؤشرات اليومية</h2>
+      <div class="kpi" id="kpis">
+        <div class="tile">
+          <div class="title">الماء المطلوب</div>
+          <div class="value" id="waterLiters">— لتر/اليوم</div>
+          <div class="chips"><span class="chip" id="waterDetail">— مل/كغ + تمرين</span></div>
+        </div>
+        <div class="tile">
+          <div class="title">الخطوات المستهدفة</div>
+          <div class="value" id="stepsTarget">— خطوة</div>
+          <div class="chips"><span class="chip" id="stepsHint">— النشاط</span></div>
+        </div>
+        <div class="tile">
+          <div class="title">السعرات المقدّرة</div>
+          <div class="value" id="caloriesTarget">— ك.سعرة/يوم</div>
+          <div class="chips">
+            <span class="chip" id="proteinChip">بروتين — غ</span>
+            <span class="chip" id="fatChip">دهون — غ</span>
+            <span class="chip" id="carbChip">كارب — غ</span>
+          </div>
+        </div>
+        <div class="tile">
+          <div class="title">خطة الأسبوع</div>
+          <div class="value" id="weeklyPlan">—</div>
+          <div class="chips" id="splitChips"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- الجدول الزمني -->
+    <section class="card span-12">
+      <h2>الجدول الزمني لليوم</h2>
+      <div class="timeline" id="timeline"></div>
+      <div class="muted">
+        * الأوقات تقريبية — اجعل <span class="ok">العشاء قبل النوم بـ 2–3 ساعات</span> و<span class="ok">وجبة خفيفة بعد التمرين</span>.
+      </div>
+    </section>
+
+    <!-- التمارين حسب الهدف -->
+    <section class="card span-12">
+      <h2>برنامج التمارين المفصّل</h2>
+      <div id="workouts"></div>
+      <details>
+        <summary>نصائح عامة للتمرين</summary>
+        <ul class="list">
+          <li>ابدأ بإحماء 5–10 دقائق (مشي سريع/دراجة/حبل + حركات مرونة ديناميكية).</li>
+          <li>حمّل تدريجيًا (Progressive Overload): زِد الوزن/التكرارات تدريجيًا أسبوعيًا.</li>
+          <li>حافظ على تقنيات سليمة وتوقّف إذا شعرت بألم غير طبيعي.</li>
+        </ul>
+      </details>
+    </section>
+
+    <!-- خطة غذائية كاملة (7 أيام) -->
+    <section class="card span-12">
+      <h2>الخطة الغذائية الكاملة (7 أيام × 4 وجبات)</h2>
+      <div id="mealPlan"></div>
+      <details>
+        <summary>سياسات التغذية المستخدمة</summary>
+        <ul class="list">
+          <li>التقدير الحراري: معادلة Mifflin–St Jeor + عامل نشاط، ثم تعديل حسب الهدف.</li>
+          <li>البروتين (تقريبي): <span class="badge">خسارة دهون ~2.0 غ/كغ</span> <span class="badge">ثبات ~1.6 غ/كغ</span> <span class="badge">زيادة ~1.8–2.0 غ/كغ</span>.</li>
+          <li>الدهون: 25–30% من السعرات، والباقي كارب.</li>
+          <li>التوزيع اليومي: 4 وجبات (فطور/غداء/سناك/عشاء) 25% / 35% / 15% / 25%.</li>
+        </ul>
+      </details>
+    </section>
+  </div>
+</div>
+
+<script src="app.js" defer></script>
+</body>
+</html>
