@@ -27,7 +27,7 @@ async function login() {
             message.innerText = 'تم تسجيل الدخول بنجاح! جاري التحويل...';
             
             setTimeout(() => {
-                window.location.href = 'planner.html';
+                window.location.href = 'mr.html';
             }, 1500);
         } else {
             message.style.color = 'red';
