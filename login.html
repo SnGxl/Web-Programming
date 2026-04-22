@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول - Body Style</title>
+   
+<title>تسجيل الدخول - Body Style</title>
+ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
         body { background: #0f172a; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; flex-direction: column; padding: 20px; }
         .card { background: #1e293b; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #334155; }
@@ -23,6 +26,9 @@
         <h2>تسجيل الدخول</h2>
         <input type="text" placeholder="اسم المستخدم" id="username">
         <input type="password" placeholder="كلمة المرور" id="password">
+     <button onclick="login()">تسجيل الدخول</button>
+<button onclick="signup()" style="background: #28a745; margin-top: 10px;">إنشاء حساب جديد</button>
+        
         <button onclick="login()">تسجيل الدخول</button>
         <div class="toggle">هذه البيانات مرتبطة بجدول SQL</div>
         <div id="message" style="margin-top: 10px; font-weight: bold;"></div>
