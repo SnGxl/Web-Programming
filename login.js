@@ -8,36 +8,34 @@ async function login() {
     const message = document.getElementById('message');
 
     if (!userField || !passField) {
-        message.innerText = 'الرجاء إدخال اسم المستخدم وكلمة المرور';
+        message.innerText = "الرجاء إدخال اسم المستخدم وكلمة المرور";
         message.style.color = 'orange';
         return;
     }
 
     try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/users?username=eq.${userField}&password=eq.${passField}`, {
-            headers: {
-                'apikey': SUPABASE_KEY,
-                'Authorization': `Bearer ${SUPABASE_KEY}`
-            }
+        // استخدام نظام Supabase Auth الرسمي لتسجيل الدخول
+        const { data, error } = await _supabase.auth.signInWithPassword({
+            email: userField,
+            password: passField,
         });
 
-        const data = await response.json();
-
-        if (data.length > 0) {
+        if (error) {
+            message.style.color = 'red';
+            message.innerText = "خطأ: اسم المستخدم أو كلمة المرور غير صحيحة";
+        } else {
             message.style.color = 'green';
-            message.innerText = 'تم تسجيل الدخول بنجاح! جاري التحويل...';
+            message.innerText = "تم تسجيل الدخول بنجاح! جاري التحويل...";
             
             setTimeout(() => {
                 window.location.href = 'mr.html';
             }, 1500);
-        } else {
-            message.style.color = 'red';
-            message.innerText = 'خطأ: اسم المستخدم أو كلمة المرور غير صحيحة.';
         }
     } catch (error) {
-        message.innerText = 'حدث خطأ في الاتصال بالسيرفر.';
+        message.innerText = "حدث خطأ في الاتصال بالسيرفر";
     }
 }
+
 async function signup() {
     const userField = document.getElementById('username').value;
     const passField = document.getElementById('password').value;
