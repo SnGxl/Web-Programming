@@ -2,6 +2,8 @@ const SUPABASE_URL = 'https://cgiydhcrkwdjuoajefbj.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_nhFw6ucdW0t4_kEptMEkKg_QHONU-_E';
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+
+
 async function login() {
     const userField = document.getElementById('username').value;
     const passField = document.getElementById('password').value;
