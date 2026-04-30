@@ -5,7 +5,8 @@ const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 
 async function login() {
-    const userField = document.getElementById('username').value;
+    const userField = document.getElementById('email').value;
+    
     const passField = document.getElementById('password').value;
     const message = document.getElementById('message');
 
