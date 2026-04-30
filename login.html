@@ -13,6 +13,30 @@
         button { width: 100%; padding: 12px; border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; margin-top: 10px; }
         .login-btn { background: #22c55e; }
         .signup-btn { background: #28a745; }
+        .contact-support {
+    margin-top: 20px;
+    border-top: 1px solid #334155;
+    padding-top: 15px;
+}
+.whatsapp-btn {
+    background-color: #25D366;
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+}
+.email-btn {
+    background-color: #ef4444;
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+}
+        
     </style>
 </head>
 <body>
@@ -28,6 +52,21 @@
         <button class="signup-btn" onclick="window.location.href='signup.html'">إنشاء حساب جديد</button>
         <div id="message" style="margin-top: 15px; font-weight: bold;"></div>
     </div>
+    <div class="contact-support">
+    <p>تحتاج مساعدة؟ تواصل معنا:</p>
+    <div class="support-links">
+        <!-- رابط الواتساب برقمك -->
+        <a href="https://wa.me/966565191348" target="_blank" class="whatsapp-btn">
+             واتساب
+        </a>
+        
+        <!-- رابط الإيميل حقك -->
+        <a href="mailto:bodystyle39@gmail.com" class="email-btn">
+             البريد الإلكتروني
+        </a>
+    </div>
+    </div>
+    
     <script src="login.js"></script>
 </body>
 </html>
