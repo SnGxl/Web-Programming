@@ -14,28 +14,22 @@
         .login-btn { background: #22c55e; }
         .signup-btn { background: #28a745; }
         .contact-support {
-    margin-top: 20px;
+    .contact-icons-container {
+    margin-top: 15px;
     border-top: 1px solid #334155;
-    padding-top: 15px;
+    padding-top: 10px;
+    text-align: center;
 }
-.whatsapp-btn {
-    background-color: #25D366;
-    display: block;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 8px;
-    text-decoration: none;
-    color: white;
+.icons-row {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
 }
-.email-btn {
-    background-color: #ef4444;
-    display: block;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 8px;
-    text-decoration: none;
-    color: white;
+.icons-row img {
+    width: 35px;
+    height: 35px;
 }
+
         
     </style>
 </head>
@@ -51,21 +45,21 @@
         <!-- هذا هو الزر اللي يوديك للصفحة الجديدة اللي سميناها signup.html -->
         <button class="signup-btn" onclick="window.location.href='signup.html'">إنشاء حساب جديد</button>
         <div id="message" style="margin-top: 15px; font-weight: bold;"></div>
+    </    <!-- كود التواصل الجديد داخل البطاقة وبنفس أسماء الكلاسات في الـ CSS -->
+    <div class="contact-icons-container">
+        <p style="font-size: 13px; color: #94a3b8; margin-bottom: 8px;">تواصل معنا</p>
+        <div class="icons-row">
+            <a href="https://wa.me/966565191348" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+            </a>
+            <a href="mailto:bodystyle39@gmail.com">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Email">
+            </a>
+        </div>
     </div>
-    <div class="contact-support">
-    <p>تحتاج مساعدة؟ تواصل معنا:</p>
-    <div class="support-links">
-        <!-- رابط الواتساب برقمك -->
-        <a href="https://wa.me/966565191348" target="_blank" class="whatsapp-btn">
-             واتساب
-        </a>
-        
-        <!-- رابط الإيميل حقك -->
-        <a href="mailto:bodystyle39@gmail.com" class="email-btn">
-             البريد الإلكتروني
-        </a>
-    </div>
-    </div>
+
+</div> <!-- هذا السطر 48 الجديد اللي يقفل الصندوق بعد ما حطينا داخله كل شيء -->
+
     
     <script src="login.js"></script>
 </body>
