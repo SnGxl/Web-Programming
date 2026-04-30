@@ -6,66 +6,62 @@
     <title>تسجيل الدخول - BODY STYLE</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { background: #0f172a; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .card { background: #1e293b; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; }
+        body { background: #0f172a; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: #1e293b; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
         h2 { color: #38bdf8; margin-bottom: 20px; }
         input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; }
         button { width: 100%; padding: 12px; border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; margin-top: 10px; }
         .login-btn { background: #22c55e; }
         .signup-btn { background: #28a745; }
-        .contact-support {
-    .contact-icons-container {
-    margin-top: 15px;
-    border-top: 1px solid #334155;
-    padding-top: 10px;
-    text-align: center;
-}
-.icons-row {
-    display: flex;
-    justify-content: center;
-    gap: 25px;
-}
-..icons-row img {
-    width: 35px !important;
-    height: 35px !important;
-    object-fit: contain;
-}
-
         
+        /* تنسيق قسم التواصل والأيقونات */
+        .contact-icons-container {
+            margin-top: 20px;
+            border-top: 1px solid #334155;
+            padding-top: 15px;
+        }
+        .icons-row {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 10px;
+        }
+        .icons-row img {
+            width: 35px !important;
+            height: 35px !important;
+            transition: transform 0.3s;
+        }
+        .icons-row img:hover { transform: scale(1.2); }
     </style>
 </head>
 <body>
     <div class="card">
-<img src="logo.jpg" style="width: 150px; border-radius: 50%; margin-bottom: 25px; box-shadow: 0 4px 8px rgba(0,0,0,0.5);">
-        
+        <img src="logo.jpg" style="width: 150px; border-radius: 50%; margin-bottom: 25px; box-shadow: 0 4px 8px rgba(0,0,0,0.5);">
         <h1>BODY STYLE</h1>
         <h2>تسجيل الدخول</h2>
+        
         <input type="email" placeholder="البريد الإلكتروني" id="email">
         <input type="password" placeholder="كلمة المرور" id="password">
+        
         <button class="login-btn" onclick="login()">تسجيل الدخول</button>
-        <!-- هذا هو الزر اللي يوديك للصفحة الجديدة اللي سميناها signup.html -->
         <button class="signup-btn" onclick="window.location.href='signup.html'">إنشاء حساب جديد</button>
+        
         <div id="message" style="margin-top: 15px; font-weight: bold;"></div>
-    </    <!-- كود التواصل الجديد داخل البطاقة وبنفس أسماء الكلاسات في الـ CSS -->
-    <div class="contact-icons-container">
-        <p style="font-size: 13px; color: #94a3b8; margin-bottom: 8px;">تواصل معنا</p>
-        <div class="icons-row">
-            <a href="https://wa.me/966565191348" target="_blank">
-                <        <div class="icons-row">
-            <a href="https://wa.me/966565191348" target="_blank">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="social-img">
-            </a>
-            <a href="mailto:bodystyle39@gmail.com">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Email" class="social-img">
-            </a>
+
+        <!-- قسم تواصل معنا المطور -->
+        <div class="contact-icons-container">
+            <p style="font-size: 13px; color: #94a3b8; margin-bottom: 5px;">تواصل معنا</p>
+            <div class="icons-row">
+                <a href="https://wa.me/966565191348" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+                </a>
+                <a href="mailto:bodystyle39@gmail.com">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Email">
+                </a>
+            </div>
         </div>
+    </div> <!-- نهاية البطاقة -->
 
-        </div>
-    </div>
-
-</div> <!-- هذا السطر 48 الجديد اللي يقفل الصندوق بعد ما حطينا داخله كل شيء -->
-
-    
     <script src="login.js"></script>
 </body>
 </html>
