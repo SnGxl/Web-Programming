@@ -1,1 +1,83 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب جديد - BODY STYLE</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .signup-container {
+            background-color: #262626;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+            width: 350px;
+            text-align: center;
+        }
+        h2 { color: #ff6600; margin-bottom: 20px; }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background: #333;
+            color: white;
+            box-sizing: border-box;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        .checkbox-container input { width: auto; margin-left: 10px; }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #ff6600;
+            border: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover { background-color: #e65c00; }
+        .message { margin-top: 15px; font-size: 14px; }
+        .back-link { display: block; margin-top: 15px; color: #aaa; text-decoration: none; font-size: 13px; }
+    </style>
+</head>
+<body>
+
+<div class="signup-container">
+    <h2>إنشاء حساب جديد</h2>
+    <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+    <input type="password" id="password" placeholder="كلمة المرور" required>
+    <input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور" required>
+    
+    <div class="checkbox-container">
+        <input type="checkbox" id="terms" required>
+        <label for="terms">أوافق على الشروط والأحكام</label>
+    </div>
+
+    <button onclick="handleSignup()">إنشاء الحساب</button>
+    <p id="message" class="message"></p>
+    
+    <a href="login.html" class="back-link">لديك حساب بالفعل؟ سجل دخولك</a>
+</div>
+
+<script src="signup.js"></script>
+</body>
+</html>
