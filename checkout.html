@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إتمام الدفع - BODY STYLE</title>
+    <style>
+        body { background: #0f172a; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        .payment-card { background: #1e293b; border-radius: 15px; padding: 30px; width: 90%; max-width: 400px; border: 1px solid #334155; }
+        h2 { color: #38bdf8; text-align: center; }
+        .input-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #94a3b8; font-size: 14px; }
+        input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; }
+        .row { display: flex; gap: 10px; }
+        .pay-btn { width: 100%; padding: 15px; background: #22c55e; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        .cards-icons { text-align: center; margin-bottom: 20px; font-size: 24px; }
+    </style>
+</head>
+<body>
+
+    <div class="payment-card">
+        <h2>إتمام عملية الدفع 💳</h2>
+        <div class="cards-icons">🇸🇦 💳 Pay</div>
+        
+        <div class="input-group">
+            <label>رقم البطاقة</label>
+            <input type="text" placeholder="**** **** **** ****" maxlength="16">
+        </div>
+
+        <div class="row">
+            <div class="input-group" style="flex: 2;">
+                <label>تاريخ الانتهاء</label>
+                <input type="text" placeholder="MM/YY" maxlength="5">
+            </div>
+            <div class="input-group" style="flex: 1;">
+                <label>CVV</label>
+                <input type="password" placeholder="***" maxlength="3">
+            </div>
+        </div>
+
+        <button class="pay-btn" onclick="processPayment()">تأكيد الدفع الآمن</button>
+        <p id="msg" style="text-align: center; color: #22c55e; display: none;">جاري التحقق من العملية...</p>
+    </div>
+
+    <script>
+        function processPayment() {
+            document.getElementById('msg').style.display = 'block';
+            setTimeout(() => {
+                alert("تمت عملية الدفع بنجاح! مبروك اشتراكك في BODY STYLE PRO");
+                window.location.href = 'mr.html'; // العودة للمخطط بعد النجاح
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
+
