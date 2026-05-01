@@ -23,7 +23,7 @@
             justify-content: center; 
             padding: 20px; 
             width: 100%; 
-            max-width: 1000px; 
+            max-width: 1100px; 
         }
         .plan-card { 
             background: #1e293b; 
@@ -33,23 +33,24 @@
             width: 280px; 
             text-align: center; 
             transition: transform 0.3s, border-color 0.3s; 
+            position: relative;
         }
         .plan-card:hover { 
             transform: translateY(-10px); 
             border-color: #38bdf8; 
         }
-        .plan-card.pro { 
-            border: 2px solid gold; 
-            position: relative; 
+        /* تمييز الباقة السنوية */
+        .plan-card.best-value { 
+            border: 2px solid #22c55e; 
         }
-        .plan-card.pro::after { 
-            content: "الأكثر طلباً"; 
+        .plan-card.best-value::after { 
+            content: "أفضل قيمة"; 
             position: absolute; 
             top: -12px; 
             left: 50%; 
             transform: translateX(-50%); 
-            background: gold; 
-            color: black; 
+            background: #22c55e; 
+            color: white; 
             padding: 2px 10px; 
             border-radius: 10px; 
             font-size: 12px; 
@@ -77,14 +78,13 @@
         }
         .btn-free { background: #334155; color: white; }
         .btn-pro { background: gold; color: black; }
+        .btn-annual { background: #22c55e; color: white; }
         .back-btn { 
             margin-top: 30px; 
             color: #94a3b8; 
             text-decoration: none; 
             font-size: 14px; 
-            border-bottom: 1px solid transparent;
         }
-        .back-btn:hover { border-color: #94a3b8; }
     </style>
 </head>
 <body>
@@ -92,6 +92,7 @@
     <h1 style="margin-bottom: 40px; text-align: center;">اختر خطة الاشتراك المناسبة</h1>
 
     <div class="plans-container">
+        <!-- الباقة المجانية -->
         <div class="plan-card">
             <h2>المجانية</h2>
             <div class="price">0 <span style="font-size: 14px;">ريال</span></div>
@@ -103,24 +104,37 @@
             <button class="btn-free" onclick="window.location.href='mr.html'">باقتك الحالية</button>
         </div>
 
-        <div class="plan-card pro">
-            <h2 style="color: gold;">BODY STYLE PRO</h2>
+        <!-- باقة برو الشهرية -->
+        <div class="plan-card">
+            <h2 style="color: gold;">PRO شهري</h2>
             <div class="price">49 <span style="font-size: 14px;">ريال/شهر</span></div>
             <ul class="features">
-                <li>كل مميزات الباقة المجانية</li>
-                <li>خطط تمارين مخصصة لهدفك</li>
-                <li>تحليل متقدم للدهون والعضلات</li>
-                <li>دعم فني وتواصل مباشر</li>
+                <li>خطط تمارين مخصصة</li>
+                <li>تحليل متقدم للبيانات</li>
+                <li>دعم فني مباشر</li>
             </ul>
-            <button class="btn-pro" onclick="subscribe()">اشترك الآن 👑</button>
+            <button class="btn-pro" onclick="subscribe('الشهرية')">اشترك الآن 👑</button>
+        </div>
+
+        <!-- باقة برو السنوية -->
+        <div class="plan-card best-value">
+            <h2 style="color: #22c55e;">PRO سنوي</h2>
+            <div class="price">399 <span style="font-size: 14px;">ريال/سنة</span></div>
+            <p style="color: #22c55e; font-size: 12px; margin-top: -10px;">وفر أكثر من 30%</p>
+            <ul class="features">
+                <li>كل مميزات باقة PRO</li>
+                <li>توفير مالي كبير</li>
+                <li>اشتراك لمدة 12 شهر</li>
+            </ul>
+            <button class="btn-annual" onclick="subscribe('السنوية')">اشترك ووفر 🚀</button>
         </div>
     </div>
 
     <a href="mr.html" class="back-btn">← العودة للمخطط الصحي</a>
 
     <script>
-        function subscribe() {
-            alert("شكراً لاختيارك باقة PRO! سيتم نقلك لبوابة الدفع قريباً.");
+        function subscribe(planType) {
+            alert("شكراً لاختيارك الباقة " + planType + "! سيتم نقلك لبوابة الدفع قريباً.");
         }
     </script>
 
