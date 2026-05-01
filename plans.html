@@ -47,5 +47,66 @@
             color: white; 
             padding: 2px 10px; 
             border-radius: 10px; 
-            font-
-            
+            font-size: 12px; 
+            font-weight: bold; 
+        }
+        h2 { color: #38bdf8; margin-top: 0; }
+        .price { font-size: 2rem; font-weight: bold; margin: 15px 0; }
+        .features { list-style: none; padding: 0; margin: 20px 0; text-align: right; font-size: 14px; }
+        .features li { margin-bottom: 10px; color: #94a3b8; }
+        .features li::before { content: "✓ "; color: #22c55e; margin-left: 5px; }
+        button { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-free { background: #334155; color: white; }
+        .btn-pro { background: gold; color: black; }
+        .btn-annual { background: #22c55e; color: white; }
+        .back-btn { margin-top: 30px; color: #94a3b8; text-decoration: none; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <h1 style="margin-bottom: 40px;">اختر خطة الاشتراك المناسبة</h1>
+
+    <div class="plans-container">
+        <div class="plan-card">
+            <h2>المجانية</h2>
+            <div class="price">0 <span style="font-size: 14px;">ريال</span></div>
+            <ul class="features">
+                <li>حساب مؤشر كتلة الجسم (BMI)</li>
+                <li>حفظ البيانات الأساسية</li>
+            </ul>
+            <button class="btn-free" onclick="window.location.href='mr.html'">باقتك الحالية</button>
+        </div>
+
+        <div class="plan-card">
+            <h2 style="color: gold;">PRO شهري</h2>
+            <div class="price">49 <span style="font-size: 14px;">ريال</span></div>
+            <ul class="features">
+                <li>خطط تمارين مخصصة</li>
+                <li>تحليل متقدم للبيانات</li>
+            </ul>
+            <button class="btn-pro" onclick="subscribe('الشهرية')">اشترك الآن 👑</button>
+        </div>
+
+        <div class="plan-card best-value">
+            <h2 style="color: #22c55e;">PRO سنوي</h2>
+            <div class="price">399 <span style="font-size: 14px;">ريال</span></div>
+            <ul class="features">
+                <li>كل مميزات PRO</li>
+                <li>توفير أكثر من 30%</li>
+            </ul>
+            <button class="btn-annual" onclick="subscribe('السنوية')">اشترك ووفر 🚀</button>
+        </div>
+    </div>
+
+    <a href="mr.html" class="back-btn">← العودة للمخطط الصحي</a>
+
+    <script>
+        function subscribe(planType) {
+            // هذا السطر هو اللي يربطك بصفحة الدفع اللي سويتها
+            window.location.href = 'checkout.html';
+        }
+    </script>
+
+</body>
+</html>
+
