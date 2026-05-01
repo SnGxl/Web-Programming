@@ -3,28 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خدمة العملاء - Body Style</title>
+    <title>خدمة العملاء - BODY STYLE</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f4; padding: 50px; }
-        .container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: inline-block; }
-        h1 { color: #333; }
-        .btn { display: inline-block; margin: 10px; padding: 15px 25px; border-radius: 10px; text-decoration: none; color: white; font-weight: bold; font-size: 18px; }
-        .whatsapp { background-color: #25D366; }
-        .email { background-color: #007bff; }
-        .back-btn { display: block; margin-top: 20px; color: #666; text-decoration: none; }
+        body { 
+            background: #0f172a; 
+            color: white; 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .support-card { 
+            background: #1e293b; 
+            border-radius: 24px; 
+            padding: 40px; 
+            width: 100%; 
+            max-width: 400px; 
+            text-align: center; 
+            border: 1px solid #334155; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+        .icon-header { font-size: 60px; margin-bottom: 15px; }
+        h2 { color: #38bdf8; margin-bottom: 15px; font-size: 26px; }
+        p { color: #94a3b8; line-height: 1.6; margin-bottom: 30px; font-size: 15px; }
+        
+        .contact-btn { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 12px; 
+            width: 100%; 
+            padding: 16px; 
+            margin-bottom: 15px; 
+            border-radius: 14px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            font-size: 16px;
+            transition: 0.3s; 
+            box-sizing: border-box;
+        }
+        
+        /* تنسيق زر الواتساب */
+        .whatsapp { 
+            background: #22c55e; 
+            color: white; 
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.2); 
+        }
+        .whatsapp:hover { 
+            background: #16a34a; 
+            transform: translateY(-3px); 
+        }
+        
+        /* تنسيق زر البريد الإلكتروني */
+        .email { 
+            background: #3b82f6; 
+            color: white; 
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2); 
+        }
+        .email:hover { 
+            background: #2563eb; 
+            transform: translateY(-3px); 
+        }
+        
+        .back-link { 
+            display: inline-block; 
+            margin-top: 25px; 
+            color: #94a3b8; 
+            text-decoration: none; 
+            font-size: 14px; 
+            transition: 0.3s;
+        }
+        .back-link:hover { color: #38bdf8; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>خدمة العملاء 🎧</h1>
-        <p>نحن هنا لمساعدتك، تواصل معنا عبر الوسائل التالية:</p>
-        
-        <a href="https://wa.me/9665XXXXXXXX" class="btn whatsapp" target="_blank">واتساب 📱</a>
-        
-        <a href="mailto:example@gmail.com" class="btn email">البريد الإلكتروني 📧</a>
 
-        <a href="login.html" class="back-btn">← العودة للرئيسية</a>
+    <div class="support-card">
+        <div class="icon-header">🎧</div>
+        <h2>خدمة العملاء</h2>
+        <p>نحن هنا لمساعدتك يا أحمد، تواصل معنا مباشرة عبر الوسائل التالية:</p>
+
+        <!-- رابط الواتساب (تأكد من وضع رقمك مكان الـ X) -->
+        <a href="https://wa.me/966XXXXXXXXX" class="contact-btn whatsapp">
+            <span>📱</span> واتساب
+        </a>
+
+        <!-- رابط البريد الإلكتروني (ضع إيميلك مكان الإيميل التجريبي) -->
+        <a href="mailto:your-email@example.com" class="contact-btn email">
+            <span>✉️</span> البريد الإلكتروني
+        </a>
+
+        <a href="mr.html" class="back-link">← العودة للرئيسية</a>
     </div>
+
 </body>
 </html>
 
