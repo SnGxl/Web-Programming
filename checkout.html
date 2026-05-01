@@ -5,26 +5,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إتمام الدفع - BODY STYLE</title>
     <style>
-        body { background: #0f172a; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
-        .payment-card { background: #1e293b; border-radius: 15px; padding: 30px; width: 90%; max-width: 400px; border: 1px solid #334155; }
-        h2 { color: #38bdf8; text-align: center; }
-        .input-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; color: #94a3b8; font-size: 14px; }
-        input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; }
+        body { 
+            background: #0f172a; 
+            color: white; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            margin: 0; 
+        }
+        .payment-card { 
+            background: #1e293b; 
+            border-radius: 15px; 
+            padding: 30px; 
+            width: 90%; 
+            max-width: 400px; 
+            border: 1px solid #334155; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        h2 { color: #38bdf8; text-align: center; margin-bottom: 20px; }
+        
+        /* أيقونات الدفع */
+        .payment-methods {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #334155;
+        }
+        .method-icon {
+            background: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #0f172a;
+            border: 1px solid #ddd;
+        }
+
+        .input-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #94a3b8; font-size: 13px; }
+        input { 
+            width: 100%; 
+            padding: 10px; 
+            border-radius: 8px; 
+            border: 1px solid #334155; 
+            background: #0f172a; 
+            color: white; 
+            box-sizing: border-box; 
+            outline: none;
+        }
+        input:focus { border-color: #38bdf8; }
+
+        /* تنسيق كود الخصم */
+        .promo-section {
+            display: flex;
+            gap: 8px;
+            margin-top: 5px;
+        }
+        .apply-btn {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 0 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
         .row { display: flex; gap: 10px; }
-        .pay-btn { width: 100%; padding: 15px; background: #22c55e; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px; }
-        .cards-icons { text-align: center; margin-bottom: 20px; font-size: 24px; }
+        .pay-btn { 
+            width: 100%; 
+            padding: 15px; 
+            background: #22c55e; 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            font-size: 16px; 
+            margin-top: 20px; 
+        }
+        .back-link { display: block; text-align: center; margin-top: 15px; color: #94a3b8; text-decoration: none; font-size: 13px; }
     </style>
 </head>
 <body>
 
     <div class="payment-card">
-        <h2>إتمام عملية الدفع 💳</h2>
-        <div class="cards-icons">🇸🇦 💳 Pay</div>
+        <h2>إتمام الدفع الآمن 💳</h2>
         
+        <!-- الأيقونات -->
+        <div class="payment-methods">
+            <div class="method-icon" style="color: #0077ff;">mada</div>
+            <div class="method-icon" style="color: #1a1f71;">VISA</div>
+            <div class="method-icon" style="color: #eb001b;">MasterCard</div>
+            <div class="method-icon" style="color: #003087;">PayPal</div>
+            <div class="method-icon" style="background: black; color: white;">Pay</div>
+        </div>
+        
+        <!-- بيانات البطاقة -->
         <div class="input-group">
             <label>رقم البطاقة</label>
-            <input type="text" placeholder="**** **** **** ****" maxlength="16">
+            <input type="text" id="cardNum" placeholder="**** **** **** ****" maxlength="16">
         </div>
 
         <div class="row">
@@ -38,19 +124,51 @@
             </div>
         </div>
 
-        <button class="pay-btn" onclick="processPayment()">تأكيد الدفع الآمن</button>
-        <p id="msg" style="text-align: center; color: #22c55e; display: none;">جاري التحقق من العملية...</p>
+        <!-- كود الخصم -->
+        <div class="input-group">
+            <label>كود الخصم</label>
+            <div class="promo-section">
+                <input type="text" id="promoCode" placeholder="مثلاً: AHMED20">
+                <button class="apply-btn" onclick="applyPromo()">تطبيق</button>
+            </div>
+            <p id="promoMsg" style="font-size: 12px; margin-top: 5px;"></p>
+        </div>
+
+        <button class="pay-btn" onclick="processPayment()">تأكيد الدفع</button>
+        <p id="loadingMsg" style="text-align: center; color: #38bdf8; display: none; margin-top: 10px;">جاري معالجة الطلب...</p>
     </div>
 
+    <a href="plans.html" class="back-link">← العودة لتعديل الباقة</a>
+
     <script>
+        // نظام أكواد الخصم
+        function applyPromo() {
+            const code = document.getElementById('promoCode').value.toUpperCase();
+            const msg = document.getElementById('promoMsg');
+            
+            if(code === "AHMED20" || code === "BODY10") {
+                msg.style.color = "#22c55e";
+                msg.innerText = "✅ تم تطبيق الخصم بنجاح!";
+            } else {
+                msg.style.color = "#ef4444";
+                msg.innerText = "❌ كود غير صحيح";
+            }
+        }
+
         function processPayment() {
-            document.getElementById('msg').style.display = 'block';
+            const card = document.getElementById('cardNum').value;
+            if(card.length < 16) {
+                alert("يرجى إدخال رقم بطاقة صحيح (16 رقم)");
+                return;
+            }
+
+            document.getElementById('loadingMsg').style.display = 'block';
+            
             setTimeout(() => {
                 alert("تمت عملية الدفع بنجاح! مبروك اشتراكك في BODY STYLE PRO");
-                window.location.href = 'mr.html'; // العودة للمخطط بعد النجاح
+                window.location.href = 'mr.html'; 
             }, 2000);
         }
     </script>
 </body>
 </html>
-
