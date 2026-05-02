@@ -4,127 +4,172 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة تحكم BODY STYLE</title>
-    <!-- استدعاء مكتبة Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #7c4dff; /* لون بنفسجي متناسق مع شعارك */
-            --bg-color: #0f172a; /* خلفية داكنة احترافية */
-            --card-bg: #1e293b;
-            --text-color: #ffffff;
+            --primary-bg: #121212;
+            --card-bg: #1e1e2d;
+            --accent-purple: #7b61ff;
+            --text-main: #ffffff;
+            --text-secondary: #b0b0b0;
         }
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: var(--bg-color); 
-            color: var(--text-color);
-            padding: 20px; 
-            text-align: center; 
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
             margin: 0;
+            padding: 20px;
+            text-align: center;
         }
-        h1 { color: var(--primary-color); margin-bottom: 30px; }
-        .stat-card { 
-            background: var(--card-bg); 
-            padding: 30px; 
-            border-radius: 15px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
-            display: inline-block; 
-            margin: 20px; 
-            min-width: 250px;
-            border: 1px solid rgba(124, 77, 255, 0.2);
-        }
-        table { 
-            width: 100%; 
+
+        .container {
             max-width: 800px;
-            margin: 30px auto;
-            border-collapse: collapse; 
-            background: var(--card-bg); 
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--accent-purple);
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            margin-bottom: 30px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent-purple);
+            display: block;
+            margin: 15px 0;
+        }
+
+        button {
+            background-color: var(--accent-purple);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        table {
+            width: 100%;
+            background-color: var(--card-bg);
             border-radius: 10px;
+            border-collapse: collapse;
+            margin-top: 20px;
             overflow: hidden;
         }
-        th, td { padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        th { background-color: var(--primary-color); color: white; font-weight: bold; }
-        tr:hover { background-color: rgba(255,255,255,0.05); }
-        .refresh-btn { 
-            background: var(--primary-color); 
-            color: white; 
-            border: none; 
-            padding: 12px 25px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-size: 16px;
-            transition: 0.3s;
-            margin-top: 10px;
+
+        th {
+            background-color: var(--accent-purple);
+            padding: 15px;
+            font-size: 1.1rem;
         }
-        .refresh-btn:hover { opacity: 0.8; transform: scale(1.05); }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #2d2d3f;
+            color: var(--text-secondary);
+        }
+
+        #status-msg {
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
 
-    <h1>لوحة تحكم BODY STYLE</h1>
+    <div class="container">
+        <h1>لوحة تحكم BODY STYLE</h1>
 
-    <div class="stat-card">
-        <h3>إجمالي المستخدمين</h3>
-        <p id="user-count" style="font-size: 32px; font-weight: bold; color: var(--primary-color);">جاري التحميل...</p>
-        <button class="refresh-btn" onclick="loadData()">تحديث البيانات 🔄</button>
+        <div class="stat-card">
+            <h3>إجمالي المستخدمين</h3>
+            <span id="total-users" class="stat-number">...</span>
+            <button onclick="fetchData()">تحديث البيانات 🔄</button>
+            <div id="status-msg"></div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>الاسم (Username)</th>
+                    <th>المعرف (ID)</th>
+                </tr>
+            </thead>
+            <tbody id="users-table">
+                <tr>
+                    <td colspan="2">جاري سحب البيانات من القاعدة...</td>
+                </tr>
+            </tbody>
+        </div>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>الاسم (Username)</th>
-                <th>المعرف (ID)</th>
-            </tr>
-        </thead>
-        <tbody id="users-list">
-            <tr><td colspan="2">جاري سحب البيانات من القاعدة...</td></tr>
-        </tbody>
-    </table>
-
     <script>
-        // الروابط الصحيحة بناءً على بياناتك الأخيرة
+        // إعدادات Supabase من صورك يا أحمد
         const SUPABASE_URL = 'https://cgiydhcrkwdjuoajefbj.supabase.co';
-        const SUPABASE_KEY = 'Sb_publishable_nhFw6ucdW0t4_kEptMEkKg_QHONU-_E';
+        const SUPABASE_KEY = 'EyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnaXlkaGNya3dkanVvYWplZmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NTg5NTgsImV4cCI6MjA5MDEzNDk1OH0.zyMYU6cDuWezHvhIJJeRXHgzH5ZQyQFChhNiCvnPHL0';
         
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        async function loadData() {
+        async function fetchData() {
+            const statusDiv = document.getElementById('status-msg');
+            statusDiv.innerText = "جاري الاتصال...";
+            statusDiv.style.color = "#7b61ff";
+
             try {
-                // محاولة جلب البيانات من جدول users
-                const { data: usersData, count, error } = await supabaseClient
+                // سحب البيانات من جدول users
+                const { data, error } = await _supabase
                     .from('users')
-                    .select('*', { count: 'exact' });
+                    .select('*');
 
-                if (error) {
-                    console.error('Error:', error);
-                    document.getElementById('user-count').innerText = 'خطأ في الاتصال';
-                    return;
-                }
+                if (error) throw error;
 
                 // تحديث العداد
-                document.getElementById('user-count').innerText = count || 0;
+                document.getElementById('total-users').innerText = data.length;
 
                 // تحديث الجدول
-                const listBody = document.getElementById('users-list');
-                listBody.innerHTML = '';
+                const tbody = document.getElementById('users-table');
+                tbody.innerHTML = "";
 
-                if (!usersData || usersData.length === 0) {
-                    listBody.innerHTML = '<tr><td colspan="2">لا يوجد مستخدمين مسجلين حالياً</td></tr>';
-                } else {
-                    usersData.forEach(user => {
-                        listBody.innerHTML += `
-                            <tr>
-                                <td>${user.username || 'بدون اسم'}</td>
-                                <td>${user.id || '-'}</td>
-                            </tr>`;
-                    });
-                }
+                data.forEach(user => {
+                    const row = `<tr>
+                        <td>${user.username || 'بدون اسم'}</td>
+                        <td>${user.id}</td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+
+                statusDiv.innerText = "تم التحديث بنجاح ✅";
+                statusDiv.style.color = "#4CAF50";
+
             } catch (err) {
-                document.getElementById('user-count').innerText = 'خطأ تقني';
+                console.error(err);
+                document.getElementById('total-users').innerText = "خطأ";
+                document.getElementById('users-table').innerHTML = '<tr><td colspan="2" style="color: #ff4b4b;">فشل الاتصال: تأكد من إعدادات CORS في Supabase</td></tr>';
+                statusDiv.innerText = "خطأ في الاتصال ❌";
+                statusDiv.style.color = "#ff4b4b";
             }
         }
 
-        // تشغيل الجلب التلقائي عند فتح الصفحة
-        loadData();
+        // تشغيل السحب تلقائياً عند فتح الصفحة
+        fetchData();
     </script>
 </body>
 </html>
