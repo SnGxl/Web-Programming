@@ -41,6 +41,7 @@
     </table>
 
     <script>
+        // الرابط المحدث مع الإصدار v1 لضمان الاتصال
         const SUPABASE_URL = 'https://cgiydhcrkwdjuoajefbj.supabase.co';
         const SUPABASE_KEY = 'EyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnaXlkaGNya3dkanVvYWplZmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NTg5NTgsImV4cCI6MjA5MDEzNDk1OH0.zyMYU6cDuWezHvhIJJeRXHgzH5ZQyQFChhNiCvnPHL0';
         
@@ -48,31 +49,36 @@
 
         async function loadData() {
             try {
+                // جلب البيانات من جدول users
                 const { data: usersData, count, error } = await supabaseClient
                     .from('users')
                     .select('*', { count: 'exact' });
 
-                if (error) throw error;
+                if (error) {
+                    console.error('Supabase Error:', error);
+                    document.getElementById('user-count').innerText = 'خطأ في الاتصال';
+                    return;
+                }
 
                 document.getElementById('user-count').innerText = count || 0;
 
                 const listBody = document.getElementById('users-list');
                 listBody.innerHTML = '';
 
-                if (usersData.length === 0) {
+                if (!usersData || usersData.length === 0) {
                     listBody.innerHTML = '<tr><td colspan="2">لا يوجد مستخدمين حالياً</td></tr>';
                 } else {
                     usersData.forEach(user => {
                         listBody.innerHTML += `
                             <tr>
-                                <td>${user.name || 'غير معروف'}</td>
+                                <td>${user.username || user.name || 'غير معروف'}</td>
                                 <td>${user.email || '-'}</td>
                             </tr>`;
                     });
                 }
             } catch (err) {
-                console.error('خطأ:', err);
-                document.getElementById('user-count').innerText = 'خطأ في الاتصال';
+                console.error('System Error:', err);
+                document.getElementById('user-count').innerText = 'خطأ تقني';
             }
         }
 
