@@ -5,171 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة تحكم BODY STYLE</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-bg: #121212;
-            --card-bg: #1e1e2d;
-            --accent-purple: #7b61ff;
-            --text-main: #ffffff;
-            --text-secondary: #b0b0b0;
-        }
-
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: var(--primary-bg);
-            color: var(--text-main);
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            color: var(--accent-purple);
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            margin-bottom: 30px;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: bold;
-            color: var(--accent-purple);
-            display: block;
-            margin: 15px 0;
-        }
-
-        button {
-            background-color: var(--accent-purple);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: 'Cairo', sans-serif;
-        }
-
-        button:hover {
-            opacity: 0.8;
-        }
-
-        table {
-            width: 100%;
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            border-collapse: collapse;
-            margin-top: 20px;
-            overflow: hidden;
-        }
-
-        th {
-            background-color: var(--accent-purple);
-            padding: 15px;
-            font-size: 1.1rem;
-        }
-
-        td {
-            padding: 15px;
-            border-bottom: 1px solid #2d2d3f;
-            color: var(--text-secondary);
-        }
-
-        #status-msg {
-            margin-top: 10px;
-            font-size: 0.9rem;
-        }
+        :root { --p: #7b61ff; --bg: #121212; --c: #1e1e2d; }
+        body { font-family: sans-serif; background: var(--bg); color: white; text-align: center; padding: 20px; }
+        .card { background: var(--c); padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid var(--p); }
+        .num { font-size: 3rem; color: var(--p); display: block; margin: 10px; }
+        button { background: var(--p); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
+        table { width: 100%; background: var(--c); border-radius: 10px; margin-top: 20px; border-collapse: collapse; }
+        th, td { padding: 12px; border-bottom: 1px solid #2d2d3f; }
+        th { background: var(--p); }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <h1>لوحة تحكم BODY STYLE</h1>
-
-        <div class="stat-card">
-            <h3>إجمالي المستخدمين</h3>
-            <span id="total-users" class="stat-number">...</span>
-            <button onclick="fetchData()">تحديث البيانات 🔄</button>
-            <div id="status-msg"></div>
-        </div>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>الاسم (Username)</th>
-                    <th>المعرف (ID)</th>
-                </tr>
-            </thead>
-            <tbody id="users-table">
-                <tr>
-                    <td colspan="2">جاري سحب البيانات من القاعدة...</td>
-                </tr>
-            </tbody>
-        </div>
+    <h1>لوحة تحكم BODY STYLE</h1>
+    <div class="card">
+        <h3>المستخدمين المسجلين</h3>
+        <span id="count" class="num">0</span>
+        <button onclick="load()">تحديث البيانات 🔄</button>
+        <p id="msg"></p>
     </div>
+    <table>
+        <thead><tr><th>الاسم</th><th>المعرف</th></tr></thead>
+        <tbody id="list"></tbody>
+    </table>
 
     <script>
-        // إعدادات Supabase من صورك يا أحمد
-        const SUPABASE_URL = 'https://cgiydhcrkwdjuoajefbj.supabase.co';
-        const SUPABASE_KEY = 'EyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnaXlkaGNya3dkanVvYWplZmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NTg5NTgsImV4cCI6MjA5MDEzNDk1OH0.zyMYU6cDuWezHvhIJJeRXHgzH5ZQyQFChhNiCvnPHL0';
-        
-        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        // الروابط المأخوذة من صورك
+        const URL = 'https://cgiydhcrkwdjuoajefbj.supabase.co';
+        const KEY = 'EyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnaXlkaGNya3dkanVvYWplZmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NTg5NTgsImV4cCI6MjA5MDEzNDk1OH0.zyMYU6cDuWezHvhIJJeRXHgzH5ZQyQFChhNiCvnPHL0';
 
-        async function fetchData() {
-            const statusDiv = document.getElementById('status-msg');
-            statusDiv.innerText = "جاري الاتصال...";
-            statusDiv.style.color = "#7b61ff";
-
+        // محاولة الاتصال المباشر عبر API لتقليل مشاكل CORS
+        async function load() {
+            const m = document.getElementById('msg');
+            m.innerText = "جاري المحاولة...";
             try {
-                // سحب البيانات من جدول users
-                const { data, error } = await _supabase
-                    .from('users')
-                    .select('*');
-
-                if (error) throw error;
-
-                // تحديث العداد
-                document.getElementById('total-users').innerText = data.length;
-
-                // تحديث الجدول
-                const tbody = document.getElementById('users-table');
-                tbody.innerHTML = "";
-
-                data.forEach(user => {
-                    const row = `<tr>
-                        <td>${user.username || 'بدون اسم'}</td>
-                        <td>${user.id}</td>
-                    </tr>`;
-                    tbody.innerHTML += row;
+                const response = await fetch(`${URL}/rest/v1/users?select=*`, {
+                    headers: {
+                        "apikey": KEY,
+                        "Authorization": `Bearer ${KEY}`
+                    }
                 });
-
-                statusDiv.innerText = "تم التحديث بنجاح ✅";
-                statusDiv.style.color = "#4CAF50";
-
-            } catch (err) {
-                console.error(err);
-                document.getElementById('total-users').innerText = "خطأ";
-                document.getElementById('users-table').innerHTML = '<tr><td colspan="2" style="color: #ff4b4b;">فشل الاتصال: تأكد من إعدادات CORS في Supabase</td></tr>';
-                statusDiv.innerText = "خطأ في الاتصال ❌";
-                statusDiv.style.color = "#ff4b4b";
+                
+                if (!response.ok) throw new Error('فشل الطلب');
+                
+                const data = await response.json();
+                document.getElementById('count').innerText = data.length;
+                const list = document.getElementById('list');
+                list.innerHTML = "";
+                data.forEach(u => {
+                    list.innerHTML += `<tr><td>${u.username}</td><td>${u.id}</td></tr>`;
+                });
+                m.innerText = "متصل بنجاح ✅";
+                m.style.color = "#4CAF50";
+            } catch (e) {
+                m.innerText = "خطأ: تأكد من تفعيل CORS في Supabase";
+                m.style.color = "#ff4b4b";
             }
         }
-
-        // تشغيل السحب تلقائياً عند فتح الصفحة
-        fetchData();
+        load();
     </script>
 </body>
 </html>
+
