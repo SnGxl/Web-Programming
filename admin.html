@@ -4,66 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة تحكم BODY STYLE</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        :root { --p: #7b61ff; --bg: #121212; --c: #1e1e2d; }
+        :root { --p: #7b61ff; --bg: #121212; }
         body { font-family: sans-serif; background: var(--bg); color: white; text-align: center; padding: 20px; }
-        .card { background: var(--c); padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid var(--p); }
-        .num { font-size: 3rem; color: var(--p); display: block; margin: 10px; }
+        .card { background: #1e1e2d; padding: 20px; border-radius: 15px; border: 1px solid var(--p); }
+        .num { font-size: 3rem; color: var(--p); font-bold: true; }
         button { background: var(--p); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
-        table { width: 100%; background: var(--c); border-radius: 10px; margin-top: 20px; border-collapse: collapse; }
-        th, td { padding: 12px; border-bottom: 1px solid #2d2d3f; }
-        th { background: var(--p); }
     </style>
 </head>
 <body>
     <h1>لوحة تحكم BODY STYLE</h1>
     <div class="card">
         <h3>المستخدمين المسجلين</h3>
-        <span id="count" class="num">0</span>
-        <button onclick="load()">تحديث البيانات 🔄</button>
+        <span id="count" class="num">0</span><br><br>
+        <button onclick="loadData()">تحديث البيانات 🔄</button>
         <p id="msg"></p>
     </div>
-    <table>
-        <thead><tr><th>الاسم</th><th>المعرف</th></tr></thead>
-        <tbody id="list"></tbody>
-    </table>
 
     <script>
-        // الروابط المأخوذة من صورك
-        const URL = 'https://cgiydhcrkwdjuoajefbj.supabase.co';
+        const URL = 'https://cgiydhcrkwdjuoajefbj.supabase.co/rest/v1/users?select=*';
         const KEY = 'EyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnaXlkaGNya3dkanVvYWplZmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NTg5NTgsImV4cCI6MjA5MDEzNDk1OH0.zyMYU6cDuWezHvhIJJeRXHgzH5ZQyQFChhNiCvnPHL0';
 
-        // محاولة الاتصال المباشر عبر API لتقليل مشاكل CORS
-        async function load() {
+        async function loadData() {
             const m = document.getElementById('msg');
-            m.innerText = "جاري المحاولة...";
+            m.innerText = "جاري الاتصال...";
+            
+            // استخدام وكيل (Proxy) لتخطي حماية CORS
+            const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(URL);
+
             try {
-                const response = await fetch(`${URL}/rest/v1/users?select=*`, {
-                    headers: {
-                        "apikey": KEY,
-                        "Authorization": `Bearer ${KEY}`
-                    }
-                });
-                
-                if (!response.ok) throw new Error('فشل الطلب');
-                
-                const data = await response.json();
+                const response = await fetch(proxyUrl);
+                const result = await response.json();
+                const data = JSON.parse(result.contents);
+
                 document.getElementById('count').innerText = data.length;
-                const list = document.getElementById('list');
-                list.innerHTML = "";
-                data.forEach(u => {
-                    list.innerHTML += `<tr><td>${u.username}</td><td>${u.id}</td></tr>`;
-                });
-                m.innerText = "متصل بنجاح ✅";
+                m.innerText = "تم التحديث بنجاح ✅";
                 m.style.color = "#4CAF50";
             } catch (e) {
-                m.innerText = "خطأ: تأكد من تفعيل CORS في Supabase";
+                m.innerText = "فشل الاتصال.. تأكد من وجود انترنت";
                 m.style.color = "#ff4b4b";
             }
         }
-        load();
+        loadData();
     </script>
 </body>
 </html>
-
