@@ -11,86 +11,97 @@
         .container { max-width: 600px; margin: auto; }
         .card { background: #1e1e2d; padding: 20px; border-radius: 15px; border: 1px solid #7b61ff; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         h2, h3 { color: #7b61ff; text-align: center; }
-        .tip-text { font-size: 1.1rem; line-height: 1.6; text-align: center; color: #e0e0e0; }
+        .tip-text { font-size: 1.1rem; line-height: 1.6; text-align: center; color: #e0e0e0; min-height: 50px; }
         table { width: 100%; text-align: center; border-collapse: collapse; margin-top: 15px; }
         th { background: #7b61ff; color: white; padding: 10px; border-radius: 5px; }
         td { padding: 10px; border-bottom: 1px solid #2d2d3f; }
+        .btn-back { margin: 15px 0; display: flex; align-items: center; gap: 5px; }
+        .btn-back a { color: #7b61ff; text-decoration: none; font-weight: bold; }
+        .btn-tip { background: #7b61ff; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; display: block; margin: 10px auto 0; font-family: inherit; }
     </style>
 </head>
 <body>
-<div style="margin: 15px;">
-    <a href="mr.html" style="color: #7b61ff; text-decoration: none; font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; gap: 5px;">
-        ⬅️ العودة لبرنامج التمارين
-    </a>
-</div>
-    
-<div class="container">
-    <h2>لوحة تحكم المشتركين 🏋️‍♂️</h2>
 
-    <!-- قسم نصيحة اليوم -->
-    <div class="card">
-        <h3>💡 نصيحة اليوم</h3>
-        <p id="daily-tip" class="tip-text">جاري اختيار نصيحة مميزة لك...</p>
+    <div class="btn-back">
+        <a href="mr.html">⬅️ العودة لبرنامج التمارين</a>
     </div>
 
-    <!-- قسم الرسم البياني -->
-    <div class="card">
-        <h3>📈 تتبع الوزن (كجم)</h3>
-        <canvas id="weightChart"></canvas>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>التاريخ</th>
-                    <th>الوزن</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>1 مايو</td><td>82 كجم</td></tr>
-                <tr><td>8 مايو</td><td>80.5 كجم</td></tr>
-                <tr><td>15 مايو</td><td>79 كجم</td></tr>
-            </tbody>
-        </table>
+    <div class="container">
+        <h2>🏋️ لوحة تحكم المشتركين</h2>
+
+        <!-- قسم النصائح التفاعلي -->
+        <div class="card">
+            <h3>💡 نصيحة اليوم</h3>
+            <p id="daily-tip" class="tip-text">جاري اختيار نصيحة مميزة لك...</p>
+            <button class="btn-tip" onclick="showNewTip()">💡 نصيحة ثانية</button>
+        </div>
+
+        <!-- قسم الرسم البياني -->
+        <div class="card">
+            <h3>📈 تتبع الوزن (كجم)</h3>
+            <canvas id="weightChart"></canvas>
+            <table>
+                <thead>
+                    <tr>
+                        <th>التاريخ</th>
+                        <th>الوزن</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1 مايو</td><td>82 كجم</td></tr>
+                    <tr><td>8 مايو</td><td>80.5 كجم</td></tr>
+                    <tr><td>15 مايو</td><td>79 كجم</td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 
-<script>
-    // 1. نظام النصائح العشوائية
-    const tips = [
-        "شرب الماء بانتظام يساعد في حرق الدهون وتحسين الأداء.",
-        "الاستمرارية أهم من القوة؛ تمرن قليلاً كل يوم أفضل من تمرين شاق.",
-        "النوم الكافي (7-8 ساعات) هو جزء أساسي من بناء العضلات.",
-        "تناول البروتين بعد التمرين يساعد في استشفاء العضلات.",
-        "تجنب السكريات المضافة لزيادة طاقة جسمك الطبيعية."
-    ];
-    document.getElementById('daily-tip').innerText = tips[Math.floor(Math.random() * tips.length)];
+    <script>
+        // 1. نظام النصائح العشوائية المنوع
+        const tips = [
+            "شرب الماء بانتظام يساعد في حرق الدهون وتحسين الأداء.",
+            "الاستمرارية أهم من القوة؛ تمرين قليل كل يوم أفضل من تمرين شاق أسبوعياً.",
+            "النوم الكافي (7-8 ساعات) هو جزء أساسي من بناء العضلات.",
+            "تناول البروتين بعد التمرين يساعد في استشفاء العضلات.",
+            "تجنب السكريات المضافة لزيادة طاقة جسمك الطبيعية.",
+            "التنفس الصحيح أثناء التمرين يزيد من كفاءة حرق الأكسجين.",
+            "داوم على تمارين الإطالة لتجنب الإصابات العضلية.",
+            "تذكر أن النتائج تحتاج صبراً، لا تستعجل التغيير.",
+            "وجبة قبل التمرين بساعتين تمنحك الطاقة اللازمة للأداء العالي.",
+            "التنويع في التمارين يكسر الروتين ويحفز عضلات جديدة."
+        ];
 
-    // 2. إعداد الرسم البياني
-    const ctx = document.getElementById('weightChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['1 مايو', '8 مايو', '15 مايو'],
-            datasets: [{
-                label: 'وزن الجسم',
-                data: [82, 80.5, 79],
-                borderColor: '#7b61ff',
-                backgroundColor: 'rgba(123, 97, 255, 0.2)',
-                fill: true,
-                tension: 0.4
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: { legend: { display: false } },
-            scales: {
-                y: { grid: { color: '#2d2d3f' }, ticks: { color: '#aaa' } },
-                x: { grid: { color: '#2d2d3f' }, ticks: { color: '#aaa' } }
-            }
+        function showNewTip() {
+            const randomTip = tips[Math.floor(Math.random() * tips.length)];
+            document.getElementById('daily-tip').innerText = randomTip;
         }
-    });
-</script>
 
+        // تشغيل أول نصيحة عند التحميل
+        showNewTip();
+
+        // 2. إعداد الرسم البياني
+        const ctx = document.getElementById('weightChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['1 مايو', '8 مايو', '15 مايو'],
+                datasets: [{
+                    label: 'وزن الجسم',
+                    data: [82, 80.5, 79],
+                    borderColor: '#7b61ff',
+                    backgroundColor: 'rgba(123, 97, 255, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: false, grid: { color: '#2d2d3f' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
-
