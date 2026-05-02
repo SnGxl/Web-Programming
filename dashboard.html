@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تطور BODY STYLE</title>
+    <!-- مكتبة الرسم البياني -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #121212; color: white; padding: 20px; }
+        .container { max-width: 600px; margin: auto; }
+        .card { background: #1e1e2d; padding: 20px; border-radius: 15px; border: 1px solid #7b61ff; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        h2, h3 { color: #7b61ff; text-align: center; }
+        .tip-text { font-size: 1.1rem; line-height: 1.6; text-align: center; color: #e0e0e0; }
+        table { width: 100%; text-align: center; border-collapse: collapse; margin-top: 15px; }
+        th { background: #7b61ff; color: white; padding: 10px; border-radius: 5px; }
+        td { padding: 10px; border-bottom: 1px solid #2d2d3f; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>لوحة تحكم المشتركين 🏋️‍♂️</h2>
+
+    <!-- قسم نصيحة اليوم -->
+    <div class="card">
+        <h3>💡 نصيحة اليوم</h3>
+        <p id="daily-tip" class="tip-text">جاري اختيار نصيحة مميزة لك...</p>
+    </div>
+
+    <!-- قسم الرسم البياني -->
+    <div class="card">
+        <h3>📈 تتبع الوزن (كجم)</h3>
+        <canvas id="weightChart"></canvas>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>التاريخ</th>
+                    <th>الوزن</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1 مايو</td><td>82 كجم</td></tr>
+                <tr><td>8 مايو</td><td>80.5 كجم</td></tr>
+                <tr><td>15 مايو</td><td>79 كجم</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // 1. نظام النصائح العشوائية
+    const tips = [
+        "شرب الماء بانتظام يساعد في حرق الدهون وتحسين الأداء.",
+        "الاستمرارية أهم من القوة؛ تمرن قليلاً كل يوم أفضل من تمرين شاق.",
+        "النوم الكافي (7-8 ساعات) هو جزء أساسي من بناء العضلات.",
+        "تناول البروتين بعد التمرين يساعد في استشفاء العضلات.",
+        "تجنب السكريات المضافة لزيادة طاقة جسمك الطبيعية."
+    ];
+    document.getElementById('daily-tip').innerText = tips[Math.floor(Math.random() * tips.length)];
+
+    // 2. إعداد الرسم البياني
+    const ctx = document.getElementById('weightChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['1 مايو', '8 مايو', '15 مايو'],
+            datasets: [{
+                label: 'وزن الجسم',
+                data: [82, 80.5, 79],
+                borderColor: '#7b61ff',
+                backgroundColor: 'rgba(123, 97, 255, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: '#2d2d3f' }, ticks: { color: '#aaa' } },
+                x: { grid: { color: '#2d2d3f' }, ticks: { color: '#aaa' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
+
