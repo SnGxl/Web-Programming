@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - BODY STYLE</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <style>
+        body { font-family: sans-serif; background-color: #0f172a; color: white; margin: 0; padding: 20px; }
+        .dashboard-container { max-width: 900px; margin: auto; }
+        .header { text-align: center; border-bottom: 2px solid #5d5dff; padding-bottom: 15px; margin-bottom: 30px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .stat-card { background: #1e293b; padding: 20px; border-radius: 15px; border: 1px solid #334155; text-align: center; }
+        .stat-card h3 { color: #5d5dff; margin: 0; font-size: 14px; }
+        .stat-card p { font-size: 32px; font-weight: bold; margin: 10px 0 0 0; }
+        .data-table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 12px; overflow: hidden; }
+        .data-table th { background: #334155; color: #5d5dff; padding: 12px; text-align: right; }
+        .data-table td { padding: 12px; border-bottom: 1px solid #334155; font-size: 14px; }
+        .back-btn { display: inline-block; background: #5d5dff; color: white; padding: 10px 25px; border-radius: 50px; text-decoration: none; margin-bottom: 20px; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <a href="mr.html" class="back-btn">← العودة للرئيسية</a>
+    
+    <div class="header">
+        <h1>لوحة تحكم الإدارة</h1>
+        <p>مشروع BODY STYLE - محايل عسير</p>
+    </div>
+
+    <!-- قسم الإحصائيات السريعة -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>إجمالي المشتركين</h3>
+            <p id="user-count">...</p>
+        </div>
+        <div class="stat-card">
+            <h3>رسائل خدمة العملاء</h3>
+            <p id="msg-count">...</p>
+        </div>
+        <div class="stat-card">
+            <h3>اشتراكات فعالة</h3>
+            <p id="sub-count">...</p>
+        </div>
+    </div>
+
+    <!-- جدول الرسائل الأخيرة -->
+    <h2 style="color: #5d5dff; font-size: 18px;">آخر الرسائل الواردة</h2>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>الاسم</th>
+                <th>الإيميل</th>
+                <th>الرسالة</th>
+            </tr>
+        </thead>
+        <tbody id="messages-list">
+            <!-- البيانات ستظهر هنا برمجياً -->
+            <tr>
+                <td colspan="3" style="text-align:center; padding:20px; color:#aaa;">جاري تحميل البيانات من Supabase...</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // هنا تضع بيانات الربط الخاصة بـ Supabase
+    const SUPABASE_URL = 'رابط_مشروعك_هنا';
+    const SUPABASE_KEY = 'مفتاح_الأمان_الخاص_بك';
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function loadDashboardData() {
+        // مثال لجلب عدد المستخدمين
+        const { count: userCount } = await supabase.from('profiles').select('*', { count: 'exact', head: true });
+        document.getElementById('user-count').innerText = userCount || 0;
+
+        // مثال لجلب الرسائل
+        const { data: messages } = await supabase.from('contact_messages').select('*').limit(5);
+        const list = document.getElementById('messages-list');
+        list.innerHTML = ''; 
+
+        if (messages) {
+            messages.forEach(msg => {
+                list.innerHTML += `<tr><td>${msg.name}</td><td>${msg.email}</td><td>${msg.message}</td></tr>`;
+            });
+        }
+    }
+
+    loadDashboardData();
+</script>
+
+</body>
+</html>
+
