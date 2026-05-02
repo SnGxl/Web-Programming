@@ -3,161 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم - BODY STYLE</title>
-    <!-- استدعاء مكتبة Supabase -->
+    <title>لوحة تحكم BODY STYLE</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: #0f172a; 
-            color: white; 
-            margin: 0; 
-            padding: 20px; 
-            text-align: right;
-        }
-        .dashboard-container { max-width: 1000px; margin: auto; }
-        .header { 
-            text-align: center; 
-            border-bottom: 2px solid #5d5dff; 
-            padding-bottom: 15px; 
-            margin-bottom: 30px; 
-        }
-        .header h1 { color: #5d5dff; margin: 0; }
-        .stats-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-            gap: 20px; 
-            margin-bottom: 40px; 
-        }
-        .stat-card { 
-            background: #1e293b; 
-            padding: 25px; 
-            border-radius: 15px; 
-            border: 1px solid #334155; 
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .stat-card h3 { color: #94a3b8; margin: 0; font-size: 16px; }
-        .stat-card p { font-size: 36px; font-weight: bold; margin: 10px 0 0 0; color: #5d5dff; }
-        .data-section { background: #1e293b; border-radius: 15px; padding: 20px; border: 1px solid #334155; }
-        .data-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .data-table th { background: #334155; color: #5d5dff; padding: 12px; text-align: right; border-bottom: 2px solid #5d5dff; }
-        .data-table td { padding: 12px; border-bottom: 1px solid #334155; font-size: 14px; color: #cbd5e1; }
-        .back-btn { 
-            display: inline-block; 
-            background: #5d5dff; 
-            color: white; 
-            padding: 10px 25px; 
-            border-radius: 8px; 
-            text-decoration: none; 
-            margin-bottom: 20px; 
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        .back-btn:hover { background: #4848d1; }
-        .refresh-btn {
-            background: #10b981;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            float: left;
-        }
+        body { font-family: sans-serif; background-color: #f4f4f9; padding: 20px; text-align: center; }
+        .stat-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: inline-block; margin: 10px; min-width: 200px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: center; }
+        th { background-color: #5d5dff; color: white; }
+        .refresh-btn { background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
-<div class="dashboard-container">
-    <a href="index.html" class="back-btn">← العودة للموقع</a>
-    
-    <div class="header">
-        <h1>لوحة تحكم BODY STYLE</h1>
-        <p>إدارة مشروع التخرج - الكلية التقنية</p>
+    <h1>لوحة تحكم BODY STYLE</h1>
+    <p>إدارة مشروع التخرج - الكلية التقنية</p>
+
+    <div class="stat-card">
+        <h3>إجمالي المستخدمين</h3>
+        <p id="user-count" style="font-size: 24px; font-weight: bold; color: #5d5dff;">جاري التحميل...</p>
     </div>
 
-    <!-- قسم الإحصائيات -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <h3>إجمالي المستخدمين</h3>
-            <p id="user-count">0</p>
-        </div>
-        <div class="stat-card">
-            <h3>الرسائل الواردة</h3>
-            <p id="msg-count">0</p>
-        </div>
-    </div>
+    <hr>
+    <button class="refresh-btn" onclick="loadData()">تحديث البيانات 🔄</button>
 
-    <!-- قسم الرسائل -->
-    <div class="data-section">
-        <button class="refresh-btn" onclick="loadData()">تحديث البيانات ↻</button>
-        <h2 style="color: #5d5dff; margin-top: 0;">آخر رسائل خدمة العملاء</h2>
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>الاسم</th>
-                    <th>الإيميل</th>
-                    <th>الرسالة</th>
-                </tr>
-            </thead>
-            <tbody id="messages-list">
-                <tr>
-                    <td colspan="3" style="text-align:center; padding:30px;">جاري سحب البيانات من Supabase...</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+    <h2>قائمة المستخدمين المسجلين</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>الاسم</th>
+                <th>الإيميل</th>
+            </tr>
+        </thead>
+        <tbody id="users-list">
+            <tr><td colspan="2">جاري سحب البيانات من Supabase...</td></tr>
+        </tbody>
+    </table>
 
-<script>
-    // --- بيانات الربط (تأكد من وضع الـ URL الصحيح هنا) ---
-    const SUPABASE_URL = 'https://YOUR_PROJECT_ID.supabase.co'; 
-    const SUPABASE_KEY = 'sb_publishable_nhFw6ucdW0t4_kEptMEkKg_QHONU-_E';
-    
-    // إنشاء اتصال مع Supabase
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    <script>
+        const SUPABASE_URL = 'https://cgiydhcrkwdjuoajefbj.supabase.co';
+        const SUPABASE_KEY = 'EyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnaXlkaGNya3dkanVvYWplZmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NTg5NTgsImV4cCI6MjA5MDEzNDk1OH0.zyMYU6cDuWezHvhIJJeRXHgzH5ZQyQFChhNiCvnPHL0';
+        
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    async function loadData() {
-        try {
-            // 1. جلب عدد المستخدمين من جدول الـ profiles
-            const { count: users, error: userError } = await supabaseClient
-                .from('profiles') // تأكد أن اسم الجدول مطابق لما في Supabase
-                .select('*', { count: 'exact', head: true });
-            
-            if (!userError) document.getElementById('user-count').innerText = users || 0;
+        async function loadData() {
+            try {
+                const { data: usersData, count, error } = await supabaseClient
+                    .from('users')
+                    .select('*', { count: 'exact' });
 
-            // 2. جلب الرسائل من جدول contact_messages
-            const { data: messages, error: msgError } = await supabaseClient
-                .from('contact_messages') // تأكد أن اسم الجدول مطابق
-                .select('*')
-                .order('id', { ascending: false });
+                if (error) throw error;
 
-            const list = document.getElementById('messages-list');
-            list.innerHTML = '';
+                document.getElementById('user-count').innerText = count || 0;
 
-            if (msgError) {
-                list.innerHTML = `<tr><td colspan="3" style="color:red;">خطأ في جلب الرسائل: ${msgError.message}</td></tr>`;
-            } else if (messages.length === 0) {
-                list.innerHTML = `<tr><td colspan="3" style="text-align:center;">لا توجد رسائل حالياً</td></tr>`;
-            } else {
-                document.getElementById('msg-count').innerText = messages.length;
-                messages.forEach(msg => {
-                    list.innerHTML += `
-                        <tr>
-                            <td>${msg.name || 'مجهول'}</td>
-                            <td>${msg.email || '-'}</td>
-                            <td>${msg.message || '-'}</td>
-                        </tr>`;
-                });
+                const listBody = document.getElementById('users-list');
+                listBody.innerHTML = '';
+
+                if (usersData.length === 0) {
+                    listBody.innerHTML = '<tr><td colspan="2">لا يوجد مستخدمين حالياً</td></tr>';
+                } else {
+                    usersData.forEach(user => {
+                        listBody.innerHTML += `
+                            <tr>
+                                <td>${user.name || 'غير معروف'}</td>
+                                <td>${user.email || '-'}</td>
+                            </tr>`;
+                    });
+                }
+            } catch (err) {
+                console.error('خطأ:', err);
+                document.getElementById('user-count').innerText = 'خطأ في الاتصال';
             }
-        } catch (err) {
-            console.error("حدث خطأ غير متوقع:", err);
         }
-    }
 
-    // تشغيل الدالة عند فتح الصفحة
-    loadData();
-</script>
-
+        loadData();
+    </script>
 </body>
 </html>
+
