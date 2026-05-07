@@ -1,7 +1,5 @@
-// إعدادات Supabase (ضع بياناتك هنا)
 const SUPABASE_URL = 'https://cgiydhcrkwdjuoajefbj.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_nhFw6ucdW0t4_kEptMEkKg_QHONU-_E';
-
+const SUPABASE_KEY = 'sb_publishable_nhFw6ucdwDt4_kEptMEkKg_QHONU-_E';
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 async function handleSignup() {
@@ -9,25 +7,28 @@ async function handleSignup() {
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
     const terms = document.getElementById('terms').checked;
+    const fullName = document.getElementById('full_name').value;
     const message = document.getElementById('message');
-const fullName = document.getElementById('full_name').value;
-    
-    // 1. التحقق من الشروط
+
+    if (!fullName || !email || !password) {
+        message.innerText = "الرجاء تعبئة كافة البيانات";
+        message.style.color = "orange";
+        return;
+    }
+
     if (!terms) {
         message.innerText = "يجب الموافقة على الشروط";
         message.style.color = "orange";
         return;
     }
 
-    // 2. التحقق من تطابق كلمات المرور
     if (password !== confirmPassword) {
         message.innerText = "كلمات المرور غير متطابقة";
         message.style.color = "red";
         return;
     }
 
-    // 3. إرسال الطلب لـ Supabase
-        const { data, error } = await _supabase.auth.signUp({
+    const { data, error } = await _supabase.auth.signUp({
         email: email,
         password: password,
         options: {
@@ -37,14 +38,12 @@ const fullName = document.getElementById('full_name').value;
         }
     });
 
-    });
-
     if (error) {
         message.innerText = "خطأ: " + error.message;
         message.style.color = "red";
     } else {
         message.innerText = "تم إنشاء الحساب! تحقق من بريدك الإلكتروني";
         message.style.color = "green";
+        alert("أهلاً بك يا " + fullName + "، تم التسجيل بنجاح!");
     }
 }
-
