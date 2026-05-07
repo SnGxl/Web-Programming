@@ -10,7 +10,8 @@ async function handleSignup() {
     const confirmPassword = document.getElementById('confirmPassword').value;
     const terms = document.getElementById('terms').checked;
     const message = document.getElementById('message');
-
+const fullName = document.getElementById('full_name').value;
+    
     // 1. التحقق من الشروط
     if (!terms) {
         message.innerText = "يجب الموافقة على الشروط";
@@ -26,9 +27,16 @@ async function handleSignup() {
     }
 
     // 3. إرسال الطلب لـ Supabase
-    const { data, error } = await _supabase.auth.signUp({
+        const { data, error } = await _supabase.auth.signUp({
         email: email,
-        password: password
+        password: password,
+        options: {
+            data: {
+                full_name: fullName
+            }
+        }
+    });
+
     });
 
     if (error) {
@@ -39,3 +47,4 @@ async function handleSignup() {
         message.style.color = "green";
     }
 }
+
