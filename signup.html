@@ -26,5 +26,58 @@
         }
         h2 { color: #ff6600; margin-bottom: 20px; }
         input {
-            width: 10
-            
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background: #333;
+            color: white;
+            box-sizing: border-box;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        .checkbox-container input { width: auto; margin-left: 10px; }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #ff6600;
+            border: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover { background-color: #e65c00; }
+        .message { margin-top: 15px; font-size: 14px; }
+        .back-link { display: block; margin-top: 15px; color: #aaa; text-decoration: none; font-size: 13px; }
+    </style>
+</head>
+<body>
+
+<div class="signup-container">
+    <h2>إنشاء حساب جديد</h2>
+    <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+    <input type="password" id="password" placeholder="كلمة المرور" required>
+    <input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور" required>
+    
+    <div class="checkbox-container">
+        <input type="checkbox" id="terms" required>
+        <label for="terms">أوافق على الشروط والأحكام</label>
+    </div>
+
+    <button onclick="handleSignup()">إنشاء الحساب</button>
+    <p id="message" class="message"></p>
+    
+    <a href="login.html" class="back-link">لديك حساب بالفعل؟ سجل دخولك</a>
+</div>
+
+<script src="signup.js"></script>
+</body>
+</html>
+
